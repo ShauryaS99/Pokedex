@@ -1,5 +1,11 @@
 package com.jackie.pokedex;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Pokemon {
     private String _name;
     private int _number;
@@ -14,9 +20,28 @@ public class Pokemon {
     private int _total;
     private String[] _type;
 
-    public Pokemon(String name) {
+    public Pokemon(String name, JSONParser pokedex) {
         _name = name;
-
+        try {
+            JSONObject pokemon = pokedex.getPokedex().getJSONObject(name);
+            _number = pokemon.getInt("#");
+            _atk = pokemon.getInt("Attack");
+            _def = pokemon.getInt("Defense");
+            _flavorText = pokemon.getString("FlavorText");
+            _hp = pokemon.getInt("HP");
+            _spHp = pokemon.getInt("SP. Atk");
+            _spDef = pokemon.getInt("Sp. Def");
+            _species = pokemon.getString("Species");
+            _speed = pokemon.getInt("Speed");
+            _total = pokemon.getInt("Total");
+            JSONArray typeArr = pokemon.getJSONArray("Type");
+            _type = new String[typeArr.length()];
+            for (int i = 0; i < typeArr.length(); i++) {
+                _type[i] = typeArr.getString(i);
+            }
+        } catch (JSONException ex) {
+            Log.e("ERROR", "Pokemon name not found.");
+        }
     }
 
     /** <---------- GETTER METHODS. ---------->*/
