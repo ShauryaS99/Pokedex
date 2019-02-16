@@ -7,8 +7,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Pokemon {
+    /** Pokemon attributes. */
     private String _name;
-    private int _number;
+    private String _number;
     private int _atk;
     private int _def;
     private String _flavorText;
@@ -19,17 +20,17 @@ public class Pokemon {
     private int _speed;
     private int _total;
     private String[] _type;
+    private String _imgUrl;
 
-    public Pokemon(String name, JSONParser pokedex) {
+    public Pokemon(String name, JSONObject pokemon) {
         _name = name;
         try {
-            JSONObject pokemon = pokedex.getPokedex().getJSONObject(name);
-            _number = pokemon.getInt("#");
+            _number = pokemon.getString("#");
             _atk = pokemon.getInt("Attack");
             _def = pokemon.getInt("Defense");
             _flavorText = pokemon.getString("FlavorText");
             _hp = pokemon.getInt("HP");
-            _spHp = pokemon.getInt("SP. Atk");
+            _spHp = pokemon.getInt("Sp. Atk");
             _spDef = pokemon.getInt("Sp. Def");
             _species = pokemon.getString("Species");
             _speed = pokemon.getInt("Speed");
@@ -39,10 +40,46 @@ public class Pokemon {
             for (int i = 0; i < typeArr.length(); i++) {
                 _type[i] = typeArr.getString(i);
             }
+            String imageName = _name.toLowerCase().trim();
+            if (_name.contains("(")) {
+                imageName = imageName.substring(0, name.indexOf("("));
+            }
+            imageName = imageName.trim();
+            _imgUrl = "https://img.pokemondb.net/artwork/" + imageName + ".jpg";
         } catch (JSONException ex) {
-            Log.e("ERROR", "Pokemon name not found.");
+            Log.e("ERROR", "Pokemon name not found: " + name);
         }
     }
+
+    /** <---------- DRAW POKEMON CARDS FOR RECYCLERVIEW. ---------->*/
+//    private PokemonCard setUpCard(String text) {
+//        return new PokemonCard(text)
+//    }
+//
+//    class PokemonCard {
+//        /** Pokemon card attributes.*/
+//        private int _pokemonImg;
+//        private String _pokemonName;
+//        private String _pokemonNum;
+//
+//        public PokemonCard(String text1, String text2) {
+//            this._pokemonImg = 0;
+//            this._pokemonName = text1;
+//            this._pokemonNum = text2;
+//        }
+//
+//        public int getImageResource() {
+//            return _pokemonImg;
+//        }
+//
+//        public String getText1() {
+//            return _pokemonName;
+//        }
+//
+//        public String getText2() {
+//            return _pokemonNum;
+//        }
+//    }
 
     /** <---------- GETTER METHODS. ---------->*/
 
@@ -50,7 +87,7 @@ public class Pokemon {
         return _name;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return _number;
     }
 
@@ -92,5 +129,9 @@ public class Pokemon {
 
     public String[] getType() {
         return _type;
+    }
+
+    public String getImgUrl() {
+        return _imgUrl;
     }
 }
