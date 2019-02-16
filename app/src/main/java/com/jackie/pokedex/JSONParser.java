@@ -11,19 +11,19 @@ import java.io.InputStream;
 
 public class JSONParser {
     private Context mContext;
-    private JSONObject pokedex;
+    private JSONObject pokedexJSON;
 
     public JSONParser(Context context) {
         mContext = context;
         try {
-            pokedex = new JSONObject(loadJSON(mContext));
+            pokedexJSON = new JSONObject(loadJSON(mContext));
         } catch (JSONException ex) {
             Log.e("Error", "Unexpected JSON error.");
         }
     }
 
     public JSONObject getPokedex() {
-        return pokedex;
+        return pokedexJSON;
     }
 
     private String loadJSON(Context context) {
