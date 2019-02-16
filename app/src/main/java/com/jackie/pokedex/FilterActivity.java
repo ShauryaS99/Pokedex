@@ -61,7 +61,7 @@ public class FilterActivity extends AppCompatActivity {
 
         // GRID VIEW -------
         _gridView = (GridView) findViewById(R.id.gridView);
-        final GridAdapter adapter = new GridAdapter(this, listOfImgs, listOfTypes);
+        final FilterAdapter adapter = new FilterAdapter(this, listOfImgs, listOfTypes);
         _gridView.setAdapter(adapter);
         _gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -69,12 +69,12 @@ public class FilterActivity extends AppCompatActivity {
                 int selectedIndex = adapter.getSelectedPositions().indexOf(position);
                 if (selectedIndex > -1) {
                     adapter.removePos(selectedIndex);
-                    _types.remove(((CustomGridView) view).getTextView().getText().toString());
+                    // _types.remove(((CustomGridView) view).getTextView().getText().toString());
                     ((CustomGridView) view).display(false);
                 } else {
                     if (adapter.getSelectedPositions().size() < 2) {
                         adapter.addPos(position);
-                        _types.add(((CustomGridView) view).getTextView().getText().toString());
+                        // _types.add(((CustomGridView) view).getTextView().getText().toString());
                         ((CustomGridView) view).display(true);
                     } else {
                         Toast toast = Toast.makeText(getApplicationContext(),

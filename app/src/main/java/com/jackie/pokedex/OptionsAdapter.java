@@ -2,44 +2,41 @@ package com.jackie.pokedex;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import 	android.view.LayoutInflater;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> implements Filterable {
+public class OptionsAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
     private ArrayList<Pokemon> _pokemon;
     private ArrayList<Pokemon> _filteredPokemon;
     private Context _context;
 
-    SearchAdapter(ArrayList<Pokemon> pokemon, Context context) {
+    public OptionsAdapter(ArrayList<Pokemon> pokemon, Context context) {
         _filteredPokemon = pokemon;
         _pokemon = new ArrayList<>(pokemon);
         _context = context;
     }
 
     @Override
-    public SearchViewHolder onCreateViewHolder(ViewGroup parent, int viewtypes) {
-        return new SearchViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.linear_layout, parent, false));
+    public SearchAdapter.SearchViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(SearchViewHolder holder, int index) {
-        holder.bind(index);
+    public void onBindViewHolder(SearchAdapter.SearchViewHolder searchViewHolder, int i) {
+
     }
 
     @Override
     public int getItemCount() {
-        return _filteredPokemon.size();
+        return 0;
     }
 
     class SearchViewHolder extends RecyclerView.ViewHolder {
@@ -78,36 +75,4 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         }
 
     }
-
-    @Override
-    public Filter getFilter() {
-        return searchFilter;
-    }
-
-    private Filter searchFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<Pokemon> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(_pokemon);
-            } else {
-                String prefix = constraint.toString().toLowerCase().trim();
-                for (Pokemon p : _pokemon) {
-                    if (p.getName().toLowerCase().startsWith(prefix) || p.getNumber().startsWith(prefix)) {
-                        filteredList.add(p);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            _filteredPokemon.clear();
-            _filteredPokemon.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
 }

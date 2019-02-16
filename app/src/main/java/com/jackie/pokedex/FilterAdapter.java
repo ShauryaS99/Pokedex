@@ -1,18 +1,15 @@
 package com.jackie.pokedex;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GridAdapter extends BaseAdapter {
+public class FilterAdapter extends BaseAdapter {
 
     private int[] _typeImgs;
     private String[] _typeNames;
@@ -20,7 +17,7 @@ public class GridAdapter extends BaseAdapter {
     private List<Integer> _selectedPositions = new ArrayList<>();
 
 
-    public GridAdapter(Context context, int[] typeImgs, String[] typeNames) {
+    public FilterAdapter(Context context, int[] typeImgs, String[] typeNames) {
         _typeImgs = typeImgs;
         _typeNames = typeNames;
         _context = context;
