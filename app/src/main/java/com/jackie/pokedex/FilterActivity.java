@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class FilterActivity extends AppCompatActivity {
 
     private String[] listOfTypes = {"Normal", "Fire", "Water",
@@ -34,12 +36,18 @@ public class FilterActivity extends AppCompatActivity {
     private Button _randomize;
     private Button _search;
     private Button _submit;
+    private ArrayList<String> _types;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
+        // INITIALIZATION OF EDITTEXTS--------
+        _atk = findViewById(R.id.atk);
+        _def = findViewById(R.id.def);
+        _hp = findViewById(R.id.hp);
+        initializeEditTexts();
 
         // SEARCH BUTTON -------
         _search = (Button)findViewById(R.id.searchBtn);
@@ -61,10 +69,12 @@ public class FilterActivity extends AppCompatActivity {
                 int selectedIndex = adapter.getSelectedPositions().indexOf(position);
                 if (selectedIndex > -1) {
                     adapter.removePos(selectedIndex);
+                    _types.remove(((CustomGridView) view).getTextView().getText().toString());
                     ((CustomGridView) view).display(false);
                 } else {
                     if (adapter.getSelectedPositions().size() < 2) {
                         adapter.addPos(position);
+                        _types.add(((CustomGridView) view).getTextView().getText().toString());
                         ((CustomGridView) view).display(true);
                     } else {
                         Toast toast = Toast.makeText(getApplicationContext(),
@@ -77,6 +87,26 @@ public class FilterActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // SUBMIT BUTTON -------
+        _submit = (Button)findViewById(R.id.submitBtn);
+        _submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilterActivity.this, OptionsActivity.class);
+                intent.putExtra("MinAtk", _atk.getText().toString());
+                intent.putExtra("MinDef", _def.getText().toString());
+                intent.putExtra("MinHp", _hp.getText().toString());
+                intent.putStringArrayListExtra("Types", _types);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void initializeEditTexts() {
+        _atk.setText("0");
+        _def.setText("0");
+        _hp.setText("0");
     }
 
 

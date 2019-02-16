@@ -17,7 +17,6 @@ public class GridAdapter extends BaseAdapter {
     private int[] _typeImgs;
     private String[] _typeNames;
     private Context _context;
-    private LayoutInflater _inflater;
     private List<Integer> _selectedPositions = new ArrayList<>();
 
 

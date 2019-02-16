@@ -20,6 +20,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private ArrayList<Pokemon> _pokemon;
     private SearchAdapter _adapter;
+    private RecyclerView _recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

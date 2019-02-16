@@ -35,4 +35,8 @@ public class CustomGridView extends FrameLayout {
         _icon.setBackgroundColor(isSelected? Color.parseColor("#EEEEEE") : Color.TRANSPARENT);
         _name.setBackgroundColor(isSelected? Color.parseColor("#EEEEEE") : Color.TRANSPARENT);
     }
+
+    public TextView getTextView() {
+        return _name;
+    }
 }

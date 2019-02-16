@@ -6,7 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Pokemon {
+import java.io.Serializable;
+
+public class Pokemon implements Serializable {
     /** Pokemon attributes. */
     private String _name;
     private String _number;
@@ -14,13 +16,14 @@ public class Pokemon {
     private int _def;
     private String _flavorText;
     private int _hp;
-    private int _spHp;
+    private int _spAtk;
     private int _spDef;
     private String _species;
     private int _speed;
     private int _total;
     private String[] _type;
     private String _imgUrl;
+    private String _imgName;
 
     public Pokemon(String name, JSONObject pokemon) {
         _name = name;
@@ -30,7 +33,7 @@ public class Pokemon {
             _def = pokemon.getInt("Defense");
             _flavorText = pokemon.getString("FlavorText");
             _hp = pokemon.getInt("HP");
-            _spHp = pokemon.getInt("Sp. Atk");
+            _spAtk = pokemon.getInt("Sp. Atk");
             _spDef = pokemon.getInt("Sp. Def");
             _species = pokemon.getString("Species");
             _speed = pokemon.getInt("Speed");
@@ -44,7 +47,13 @@ public class Pokemon {
             if (_name.contains("(")) {
                 imageName = imageName.substring(0, name.indexOf("("));
             }
+            if (imageName.contains("\u2640")) {
+                imageName= imageName.substring(0, imageName.indexOf("\u2640"))+"-m";
+            } else if (_name.contains("\u2642")) {
+                imageName = imageName.substring(0, imageName.indexOf("\u2642"))+"-f";
+            }
             imageName = imageName.trim();
+            _imgName = imageName;
             _imgUrl = "https://img.pokemondb.net/artwork/" + imageName + ".jpg";
         } catch (JSONException ex) {
             Log.e("ERROR", "Pokemon name not found: " + name);
@@ -77,8 +86,8 @@ public class Pokemon {
         return _hp;
     }
 
-    public int getSpHp() {
-        return _spHp;
+    public int getSpAtk() {
+        return _spAtk;
     }
 
     public int getSpDef() {
@@ -103,5 +112,9 @@ public class Pokemon {
 
     public String getImgUrl() {
         return _imgUrl;
+    }
+
+    public String getImgName() {
+        return _imgName;
     }
 }

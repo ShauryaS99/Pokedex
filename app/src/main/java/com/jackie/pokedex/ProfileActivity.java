@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -33,14 +34,16 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Profile extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
+    private Pokemon _pokemon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        _pokemon = (Pokemon) getIntent().getSerializableExtra("Pokemon");
 
         TextView pname, pnumber, pspecies, pflavor, ptype;
         ImageView pokepicture;
@@ -51,6 +54,18 @@ public class Profile extends AppCompatActivity {
         pflavor = findViewById(R.id.pflavor);
         pokepicture = findViewById(R.id.pokepicture);
         ptype = findViewById(R.id.ptype);
+
+        pname.setText(_pokemon.getName());
+        pnumber.setText(_pokemon.getNumber());
+        pspecies.setText(_pokemon.getSpecies());
+        pflavor.setText(_pokemon.getFlavorText());
+        String url = _pokemon.getImgUrl();
+        Glide.with(getApplicationContext()).load(url).centerCrop().placeholder(R.drawable.normal).into(pokepicture);
+        String types = "";
+        for (String type : _pokemon.getType()) {
+            types += type + " ";
+        }
+        ptype.setText(types);
 
 
         //*******
@@ -138,7 +153,7 @@ public class Profile extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String q = "https://bulbapedia.bulbagarden.net/wiki/" + "charmander"; //TODO name of pokemon
+                String q = "https://bulbapedia.bulbagarden.net/wiki/" + _pokemon.getImgName(); //TODO name of pokemon
                 Intent intent = new Intent(Intent.ACTION_WEB_SEARCH );
                 intent.putExtra(SearchManager.QUERY, q);
                 startActivity(intent);
@@ -168,17 +183,17 @@ public class Profile extends AppCompatActivity {
 
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
 
-        BarEntry v1e2 = new BarEntry(1, 65f);
+        BarEntry v1e2 = new BarEntry(1, _pokemon.getHp());
         valueSet1.add(v1e2);
-        BarEntry v1e3 = new BarEntry(2, 95f);
+        BarEntry v1e3 = new BarEntry(2, _pokemon.getAtk());
         valueSet1.add(v1e3);
-        BarEntry v1e4 = new BarEntry(3, 58f);
+        BarEntry v1e4 = new BarEntry(3, _pokemon.getDef());
         valueSet1.add(v1e4);
-        BarEntry v1e5 = new BarEntry(4, 10f);
+        BarEntry v1e5 = new BarEntry(4, _pokemon.getSpAtk());
         valueSet1.add(v1e5);
-        BarEntry v1e6 = new BarEntry(5, 29f);
+        BarEntry v1e6 = new BarEntry(5, _pokemon.getSpDef());
         valueSet1.add(v1e6);
-        BarEntry v1e7 = new BarEntry(6, 27f);
+        BarEntry v1e7 = new BarEntry(6, _pokemon.getSpeed());
         valueSet1.add(v1e7);
 
 
