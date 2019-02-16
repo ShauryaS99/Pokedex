@@ -168,15 +168,15 @@ public class Profile extends AppCompatActivity {
 
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
 
-        BarEntry v1e2 = new BarEntry(1, 43f);
+        BarEntry v1e2 = new BarEntry(1, 65f);
         valueSet1.add(v1e2);
-        BarEntry v1e3 = new BarEntry(2, 31f);
+        BarEntry v1e3 = new BarEntry(2, 95f);
         valueSet1.add(v1e3);
-        BarEntry v1e4 = new BarEntry(3, 55f);
+        BarEntry v1e4 = new BarEntry(3, 58f);
         valueSet1.add(v1e4);
         BarEntry v1e5 = new BarEntry(4, 10f);
         valueSet1.add(v1e5);
-        BarEntry v1e6 = new BarEntry(5, 27f);
+        BarEntry v1e6 = new BarEntry(5, 29f);
         valueSet1.add(v1e6);
         BarEntry v1e7 = new BarEntry(6, 27f);
         valueSet1.add(v1e7);
