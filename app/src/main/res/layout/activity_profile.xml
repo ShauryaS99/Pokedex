@@ -122,6 +122,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         android:text="Total: 309"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chart" />
 
