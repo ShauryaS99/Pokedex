@@ -35,7 +35,12 @@
         <activity
             android:name=".FilterActivity"
             android:windowSoftInputMode="adjustNothing" />
-        <activity android:name=".OptionsActivity"></activity>
+        <activity android:name=".OptionsActivity"
+            android:parentActivityName=".FilterActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".FilterActivity" />
+        </activity>
     </application>
 
 </manifest>

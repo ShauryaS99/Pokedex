@@ -3,6 +3,7 @@ package com.jackie.pokedex;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -47,7 +48,7 @@ public class FilterActivity extends AppCompatActivity {
         _atk = findViewById(R.id.atk);
         _def = findViewById(R.id.def);
         _hp = findViewById(R.id.hp);
-        initializeEditTexts();
+        _types = new ArrayList<String>();
 
         // SEARCH BUTTON -------
         _search = (Button)findViewById(R.id.searchBtn);
@@ -69,12 +70,15 @@ public class FilterActivity extends AppCompatActivity {
                 int selectedIndex = adapter.getSelectedPositions().indexOf(position);
                 if (selectedIndex > -1) {
                     adapter.removePos(selectedIndex);
-                    // _types.remove(((CustomGridView) view).getTextView().getText().toString());
+                    Log.e("positions", "position: " + position);
+                    _types.remove(listOfTypes[position]);
                     ((CustomGridView) view).display(false);
                 } else {
                     if (adapter.getSelectedPositions().size() < 2) {
                         adapter.addPos(position);
-                        // _types.add(((CustomGridView) view).getTextView().getText().toString());
+                        Log.e("positions", "position: " + position);
+                        Log.e("positions", "position: " + listOfTypes[position]);
+                        _types.add(listOfTypes[position]);
                         ((CustomGridView) view).display(true);
                     } else {
                         Toast toast = Toast.makeText(getApplicationContext(),
@@ -102,12 +106,5 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void initializeEditTexts() {
-        _atk.setText("0");
-        _def.setText("0");
-        _hp.setText("0");
-    }
-
 
 }

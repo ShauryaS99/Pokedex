@@ -21,13 +21,32 @@ public class OptionsActivity extends AppCompatActivity {
     private Context context;
     private ImageButton gridBtn;
     private ImageButton linearBtn;
-    private ArrayList<Pokemon> _pokemon;
+    private ArrayList<Pokemon> _filteredPokemon;
+    private String minAtk;
+    private String minDef;
+    private String minHp;
+    private ArrayList<String> types;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         context = this;
+        minAtk = getIntent().getStringExtra("MinAtk");
+        if (minAtk == null || minAtk.equals("")) {
+            minAtk = "0";
+        }
+        minDef = getIntent().getStringExtra("MinDef");
+        if (minDef == null || minDef.equals("")) {
+            minDef = "0";
+        }
+        minHp = getIntent().getStringExtra("MinHp");
+        if (minHp == null || minHp.equals("")) {
+            minHp = "0";
+        }
+        types = getIntent().getStringArrayListExtra("Types");
+        _filteredPokemon = new ArrayList<Pokemon>();
         recyclerView = (RecyclerView) findViewById(R.id.options_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         gridBtn = (ImageButton) findViewById(R.id.gridBtn);
@@ -50,10 +69,30 @@ public class OptionsActivity extends AppCompatActivity {
             }
         });
 
+        filterPokemon();
+        recyclerView.setAdapter(new OptionsAdapter(_filteredPokemon, getApplicationContext(), gridView));
+    }
 
+    void filterPokemon() {
         JSONParser parser = new JSONParser(this);
-         _pokemon = parser.getPokedex();
-        recyclerView.setAdapter(new OptionsAdapter(_pokemon, getApplicationContext(), gridView));
+        ArrayList<Pokemon> pokemon = parser.getPokedex();
+        for (Pokemon p : pokemon) {
+            if (p.getAtk() > Integer.parseInt(minAtk) &&
+                    p.getDef() > Integer.parseInt(minDef) &&
+                    p.getHp() > Integer.parseInt(minHp)) {
+                boolean flag = true;
+                for (String type : p.getType()) {
+                    if (!types.contains(type)) {
+                        flag = false;
+                    }
+                }
+                if (flag) {
+                    _filteredPokemon.add(p);
+                }
+
+            }
+        }
+
     }
 
 }
