@@ -45,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         _pokemon = (Pokemon) getIntent().getSerializableExtra("Pokemon");
 
-        TextView pname, pnumber, pspecies, pflavor, ptype;
+        TextView pname, pnumber, pspecies, pflavor, ptype, ptotal;
         ImageView pokepicture;
 
         pname = findViewById(R.id.pname);
@@ -54,11 +54,14 @@ public class ProfileActivity extends AppCompatActivity {
         pflavor = findViewById(R.id.pflavor);
         pokepicture = findViewById(R.id.pokepicture);
         ptype = findViewById(R.id.ptype);
+        ptotal = findViewById(R.id.total);
 
         pname.setText(_pokemon.getName());
         pnumber.setText(_pokemon.getNumber());
         pspecies.setText(_pokemon.getSpecies());
         pflavor.setText(_pokemon.getFlavorText());
+        String total = "Total Base Stats: " + _pokemon.getTotal();
+        ptotal.setText(total);
         String url = _pokemon.getImgUrl();
         Glide.with(getApplicationContext()).load(url).centerCrop().placeholder(R.drawable.normal).into(pokepicture);
         String types = "";
@@ -100,12 +103,14 @@ public class ProfileActivity extends AppCompatActivity {
         dataSets.add(set1);
 
         BarData data = new BarData(dataSets);
+        data.setDrawValues(true);
 
         // hide Y-axis
         YAxis left = chart.getAxisLeft();
         left.setDrawLabels(false);
         left.setDrawGridLines(false);
         left.setAxisMaximum(255);
+        left.setAxisMinimum(0);
         left.setDrawLabels(false);
         left.setDrawGridLines(false);
         left.setLabelCount(0);
@@ -126,6 +131,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         chart.setData(data);
+        chart.setDrawValueAboveBar(true);
         data.setDrawValues(true);
         data.setValueTextSize(12f);
 
@@ -153,7 +159,7 @@ public class ProfileActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String q = "https://bulbapedia.bulbagarden.net/wiki/" + _pokemon.getImgName(); //TODO name of pokemon
+                String q = "https://www.pokemon.com/us/pokedex/" + _pokemon.getName(); //TODO name of pokemon
                 Intent intent = new Intent(Intent.ACTION_WEB_SEARCH );
                 intent.putExtra(SearchManager.QUERY, q);
                 startActivity(intent);
@@ -183,17 +189,35 @@ public class ProfileActivity extends AppCompatActivity {
 
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
 
-        BarEntry v1e2 = new BarEntry(1, _pokemon.getHp());
+//        BarEntry v1e2 = new BarEntry(1, _pokemon.getHp());
+//        valueSet1.add(v1e2);
+//        BarEntry v1e3 = new BarEntry(2, _pokemon.getAtk());
+//        valueSet1.add(v1e3);
+//        BarEntry v1e4 = new BarEntry(3, _pokemon.getDef());
+//        valueSet1.add(v1e4);
+//        BarEntry v1e5 = new BarEntry(4, _pokemon.getSpAtk());
+//        valueSet1.add(v1e5);
+//        BarEntry v1e6 = new BarEntry(5, _pokemon.getSpDef());
+//        valueSet1.add(v1e6);
+//        BarEntry v1e7 = new BarEntry(6, _pokemon.getSpeed());
+//        valueSet1.add(v1e7);
+        float speed = _pokemon.getSpeed();
+        float spdef = _pokemon.getSpDef();
+        float spatk = _pokemon.getSpAtk();
+        float def = _pokemon.getDef();
+        float atk = _pokemon.getAtk();
+        float hp = _pokemon.getHp();
+        BarEntry v1e2 = new BarEntry(1, speed);
         valueSet1.add(v1e2);
-        BarEntry v1e3 = new BarEntry(2, _pokemon.getAtk());
+        BarEntry v1e3 = new BarEntry(2, spdef);
         valueSet1.add(v1e3);
-        BarEntry v1e4 = new BarEntry(3, _pokemon.getDef());
+        BarEntry v1e4 = new BarEntry(3, spatk);
         valueSet1.add(v1e4);
-        BarEntry v1e5 = new BarEntry(4, _pokemon.getSpAtk());
+        BarEntry v1e5 = new BarEntry(4, def);
         valueSet1.add(v1e5);
-        BarEntry v1e6 = new BarEntry(5, _pokemon.getSpDef());
+        BarEntry v1e6 = new BarEntry(5, atk);
         valueSet1.add(v1e6);
-        BarEntry v1e7 = new BarEntry(6, _pokemon.getSpeed());
+        BarEntry v1e7 = new BarEntry(6, hp);
         valueSet1.add(v1e7);
 
 
