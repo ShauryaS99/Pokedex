@@ -51,36 +51,6 @@ public class Pokemon {
         }
     }
 
-    /** <---------- DRAW POKEMON CARDS FOR RECYCLERVIEW. ---------->*/
-//    private PokemonCard setUpCard(String text) {
-//        return new PokemonCard(text)
-//    }
-//
-//    class PokemonCard {
-//        /** Pokemon card attributes.*/
-//        private int _pokemonImg;
-//        private String _pokemonName;
-//        private String _pokemonNum;
-//
-//        public PokemonCard(String text1, String text2) {
-//            this._pokemonImg = 0;
-//            this._pokemonName = text1;
-//            this._pokemonNum = text2;
-//        }
-//
-//        public int getImageResource() {
-//            return _pokemonImg;
-//        }
-//
-//        public String getText1() {
-//            return _pokemonName;
-//        }
-//
-//        public String getText2() {
-//            return _pokemonNum;
-//        }
-//    }
-
     /** <---------- GETTER METHODS. ---------->*/
 
     public String getName() {

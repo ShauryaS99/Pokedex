@@ -2,6 +2,7 @@ package com.jackie.pokedex;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import 	android.view.LayoutInflater;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +60,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         void bind(int position) {
             Pokemon currPokemon = _filteredPokemon.get(position);
             String url = currPokemon.getImgUrl();
-            Glide.with(_context).load(url).centerCrop().into(pokemonImg);
+            Glide.with(_context).load(url).centerCrop().placeholder(R.drawable.normal).into(pokemonImg);
             pokemonName.setText(currPokemon.getName());
             pokemonNum.setText(currPokemon.getNumber());
 
