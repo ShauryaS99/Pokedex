@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class OptionsActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class OptionsActivity extends AppCompatActivity {
     private String minDef;
     private String minHp;
     private ArrayList<String> types;
+    private boolean randomize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class OptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_options);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         context = this;
+        randomize = getIntent().getBooleanExtra("Randomize", false);
+
         minAtk = getIntent().getStringExtra("MinAtk");
         if (minAtk == null || minAtk.equals("")) {
             minAtk = "0";
@@ -69,7 +73,12 @@ public class OptionsActivity extends AppCompatActivity {
             }
         });
 
-        filterPokemon();
+        if (randomize) {
+            generateRandom();
+        } else {
+            filterPokemon();
+        }
+
         recyclerView.setAdapter(new OptionsAdapter(_filteredPokemon, getApplicationContext(), gridView));
     }
 
@@ -93,6 +102,16 @@ public class OptionsActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    void generateRandom() {
+        JSONParser parser = new JSONParser(this);
+        ArrayList<Pokemon> pokemon = parser.getPokedex();
+        for (int i = 0; i < 20; i++) {
+            Random r = new Random();
+            int num = r.nextInt(pokemon.size());
+            _filteredPokemon.add(pokemon.get(num));
+        }
     }
 
 }

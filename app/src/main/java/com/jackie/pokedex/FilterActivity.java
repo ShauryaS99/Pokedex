@@ -105,6 +105,17 @@ public class FilterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // RANDOMIZE BUTTON -------
+        _randomize = (Button)findViewById(R.id.randomizeBtn);
+        _randomize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilterActivity.this, OptionsActivity.class);
+                intent.putExtra("Randomize", true);
+                startActivity(intent);
+            }
+        });
     }
 
 }
