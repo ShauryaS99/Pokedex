@@ -31,7 +31,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
         View view = null;
         if (isGrid) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.custom_grid_layout, parent, false);
+                    .inflate(R.layout.grid_layout, parent, false);
         } else {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.linear_layout, parent, false);
@@ -57,9 +57,16 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
 
         public ViewHolder(View view) {
             super(view);
-            pokemonImg = view.findViewById(R.id.image_view);
-            pokemonName = view.findViewById(R.id.pokemon_name);
-            pokemonNum = view.findViewById(R.id.pokemon_number);
+            if (isGrid) {
+                pokemonImg = view.findViewById(R.id.gridFilteredImg);
+                pokemonName = view.findViewById(R.id.gridFilteredName);
+                pokemonNum = view.findViewById(R.id.gridFilteredNum);
+            } else {
+                pokemonImg = view.findViewById(R.id.image_view);
+                pokemonName = view.findViewById(R.id.pokemon_name);
+                pokemonNum = view.findViewById(R.id.pokemon_number);
+            }
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

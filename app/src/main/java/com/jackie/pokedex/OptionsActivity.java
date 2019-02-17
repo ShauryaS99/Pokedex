@@ -60,6 +60,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 gridView = true;
                 recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+                recyclerView.setAdapter(new OptionsAdapter(_filteredPokemon, getApplicationContext(), gridView));
             }
         });
 
@@ -70,6 +71,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 gridView = false;
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                recyclerView.setAdapter(new OptionsAdapter(_filteredPokemon, getApplicationContext(), gridView));
             }
         });
 
