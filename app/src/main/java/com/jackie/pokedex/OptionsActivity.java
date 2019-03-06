@@ -92,13 +92,41 @@ public class OptionsActivity extends AppCompatActivity {
                     p.getDef() > Integer.parseInt(minDef) &&
                     p.getHp() > Integer.parseInt(minHp)) {
                 boolean flag = true;
-                for (String type : p.getType()) {
-                    if (!types.contains(type)) {
-                        flag = false;
+                if (types.size() == 1) {
+                    for (String type : p.getType()) {
+                        if (!types.contains(type)) {
+                            flag = false;
+                        }
+                    }
+                    if (flag) {
+                        _filteredPokemon.add(p);
                     }
                 }
-                if (flag) {
-                    _filteredPokemon.add(p);
+                else if (types.size() == 2) {
+                    String type_one = types.get(0);
+                    String type_two = types.get(1);
+                    String real_one = p.getType()[0];
+                    String real_two;
+                    if (p.getType().length == 2) {
+                        real_two = p.getType()[1];
+                    } else {
+                        real_two = "poop";
+                    }
+                    flag = false;
+                    if (type_one.contains(real_one) || type_one.contains(real_two)) {
+                        if (type_two.contains(real_one) || type_two.contains(real_two)) {
+                            flag = true;
+                        }
+                    }
+//                    System.out.println("hello I am a " + p.getType());
+//                    for (String type : p.getType()) {
+//                        if (!(type_one.contains(type) && type_two.contains(type))) {
+//                            flag = false;
+//                        }
+//                    }
+                    if (flag) {
+                        _filteredPokemon.add(p);
+                    }
                 }
 
             }
